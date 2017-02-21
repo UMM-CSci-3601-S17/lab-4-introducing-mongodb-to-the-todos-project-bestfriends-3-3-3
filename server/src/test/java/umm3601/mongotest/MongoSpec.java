@@ -7,6 +7,7 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import static org.junit.Assert.*;
  *
  * Created by mcphee on 20/2/17.
  */
-public class MongoSpec {
+@Ignore public class MongoSpec {
 
     private MongoCollection<Document> userDocuments;
 

@@ -54,9 +54,7 @@ public class UserController {
 
     // Get a single user
     public String getUser(String id) {
-        FindIterable<Document> jsonUsers
-                = userCollection
-                    .find(eq("_id", new ObjectId(id)));
+        FindIterable<Document> jsonUsers = userCollection.find(eq("_id", new ObjectId(id)));
 
         Iterator<Document> iterator = jsonUsers.iterator();
 
