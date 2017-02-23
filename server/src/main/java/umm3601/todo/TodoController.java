@@ -16,8 +16,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
-import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.*;
 
 
 public class TodoController {
@@ -46,16 +47,11 @@ public class TodoController {
             filterDoc = filterDoc.append("category", category);
         }
 
-        if(queryParams.containsKey("contains")){
-            String parameter = queryParams.get("contains")[0];
-            filterDoc = filterDoc.append("body", parameter);
-        }
-
         if(queryParams.containsKey("status")){
             boolean status;
             String temp = queryParams.get("status")[0];
 
-            if(temp.equals("true")){
+            if(temp.equals("complete")){
                 status = true;
             }else {
                 status = false;
@@ -67,8 +63,14 @@ public class TodoController {
 
         if(queryParams.containsKey("orderBy")){
             String order = queryParams.get("orderBy")[0];
-            matchingTodos.sort(Sorts.descending(order));
+            matchingTodos.sort(Sorts.ascending(order));
         }
+
+        if(queryParams.containsKey("contains")) {
+            String parameter = queryParams.get("contains")[0];
+            matchingTodos.filter(regex("body", parameter));
+        }
+
 
         if(queryParams.containsKey("limit")){
             int limit = Integer.parseInt(queryParams.get("limit")[0]);
