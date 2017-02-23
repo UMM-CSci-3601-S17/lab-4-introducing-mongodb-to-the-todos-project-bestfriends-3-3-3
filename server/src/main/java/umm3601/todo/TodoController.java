@@ -63,15 +63,17 @@ public class TodoController {
             filterDoc = filterDoc.append("status", status);
         }
 
-        if(queryParams.containsKey("orderBy")){
+        FindIterable<Document> matchingTodos = todoCollection.find(filterDoc);
 
+        if(queryParams.containsKey("orderBy")){
+            String order = queryParams.get("orderBy")[0];
+            matchingTodos.sort(Sorts.descending(order));
         }
 
         if(queryParams.containsKey("limit")){
-
+            int limit = Integer.parseInt(queryParams.get("limit")[0]);
+            matchingTodos.limit(limit);
         }
-
-        FindIterable<Document> matchingTodos = todoCollection.find(filterDoc);
 
         return JSON.serialize(matchingTodos);
     }
