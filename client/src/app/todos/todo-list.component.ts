@@ -11,13 +11,26 @@ import {FilterBy} from "../users/filter.pipe";
 
 export class TodoListComponent implements OnInit {
     public todos: Todo[];
-
+    public searchOwner: string;
+    public searchCategory: string;
+    public complete: string;
+    public limit: number = 0;
+    public order: string;
     constructor(private todoListService: TodoListService) {
         // this.users = this.userListService.getUsers();
     }
 
     ngOnInit(): void {
-        this.todoListService.getTodos().subscribe(
+        this.todoListService.getTodos(this.searchOwner, this.searchCategory, this.complete, this.limit, this.order).subscribe(
+            todos => this.todos = todos,
+            err => {
+                console.log(err);
+            }
+        );
+    }
+
+    onChange(): void {
+        this.todoListService.getTodos(this.searchOwner, this.searchCategory, this.complete, this.limit, this.order).subscribe(
             todos => this.todos = todos,
             err => {
                 console.log(err);

@@ -1,0 +1,23 @@
+<ul class="list-group">
+    <li class="list-group-item list-group-item-info">
+        <input #input type="text" placeholder="Filter by owner" (input)="searchOwner = $event.target.value">
+        <input #input type="text" placeholder="Filter by category" (input)="searchCategory = $event.target.value">
+        <select (input)="complete = $event.target.value">
+            <option value=""></option>
+            <option value="complete">Complete</option>
+            <option value="incomplete">Incomplete</option>
+        </select>
+        <input #input type="text" placeholder="Search body" (input)="searchBody = $event.target.value">
+        <input #input type="number" placeholder="limit todos" (input)="limit = $event.target.value">
+        <input #input type="text" placeholder="Sort todos" (input)="order = $event.target.value">
+        <button (click)="onChange()">Submit</button>
+    </li>
+    <li class="list-group-item list-group-item-info">Todos</li>
+    <li *ngFor="let todo of todos| filterBy: { body: searchBody }" class="list-group-item">
+        {{ todo._id }} <br>
+        {{ todo.owner }} <br>
+        {{ todo.status }} <br>
+        {{ todo.body }} <br>
+        {{ todo.category }}
+    </li>
+</ul>
