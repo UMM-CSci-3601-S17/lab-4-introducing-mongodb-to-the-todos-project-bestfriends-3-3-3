@@ -62,6 +62,11 @@ public class Server {
             return todoController.listTodos(req.queryMap().toMap());
         });
 
+        get("api/todoSummary", (req, res) -> {
+            res.type("application/json");
+            return todoController.listTodos(req.queryMap().toMap());
+        });
+
         // Handle "404" file not found requests:
         notFound((req, res) -> {
             res.type("text");

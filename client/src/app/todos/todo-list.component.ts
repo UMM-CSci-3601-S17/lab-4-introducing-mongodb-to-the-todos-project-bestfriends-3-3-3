@@ -13,7 +13,6 @@ export class TodoListComponent implements OnInit {
     public todos: Todo[];
     public searchOwner: string;
     public searchCategory: string;
-    public complete: string;
     public limit: number = 0;
     public order: string;
     constructor(private todoListService: TodoListService) {
@@ -21,7 +20,7 @@ export class TodoListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.todoListService.getTodos(this.searchOwner, this.searchCategory, this.complete, this.limit, this.order).subscribe(
+        this.todoListService.getTodos(this.searchOwner, this.searchCategory,this.limit, this.order).subscribe(
             todos => this.todos = todos,
             err => {
                 console.log(err);
@@ -30,7 +29,7 @@ export class TodoListComponent implements OnInit {
     }
 
     onChange(): void {
-        this.todoListService.getTodos(this.searchOwner, this.searchCategory, this.complete, this.limit, this.order).subscribe(
+        this.todoListService.getTodos(this.searchOwner, this.searchCategory,this.limit, this.order).subscribe(
             todos => this.todos = todos,
             err => {
                 console.log(err);

@@ -8,52 +8,48 @@ export class TodoListService {
     private todoUrl: string = API_URL + "todos";
     constructor(private http:Http) { }
 
-    getTodos(owner: string, category: string, status: string, limit : number, order : string): Observable<Todo[]> {
-        let tempUrl : string = this.urlBuilder(owner,category,status, limit, order);
+    getTodos(owner: string, category: string, limit : number, order : string): Observable<Todo[]> {
+        let tempUrl : string = this.urlBuilder(owner,category,limit, order);
+        console.log(tempUrl);
         return this.http.request(tempUrl).map(res => res.json());
     }
 
-    urlBuilder(owner: string, category: string, status: string, limit : number, order : string): string{
-        let addURL : string = this.todoUrl;
+    urlBuilder(owner: string, category: string, limit : number, order : string): string{
+        let addUrl : string = this.todoUrl;
+        let ownerFirst: boolean = false;
+        let catFirst: boolean = false;
+        let limFirst: boolean = false;
+        let orderFirst: boolean = false;
         if(owner){
-            addURL += "?owner=" + owner;
+            addUrl += "?owner=" + owner;
+            ownerFirst = true;
+        }else if(category){
+            addUrl += "?category=" + category;
+            catFirst = true;
+        }else if(order){
+            addUrl += "?orderBy=" + order;
+            limFirst = true;
+        }else if(limit != 0){
+            addUrl += "?limit=" + limit;
+            orderFirst = true;
         }
 
-        if(owner && category){
-            addURL += "&category=" + category;
-        }else if(owner == null && category){
-            addURL = "?category=" + category;
-            return addURL;
+        if(owner && ownerFirst == false){
+            addUrl += "&owner=" + owner;
         }
 
-        if(owner && category && status){
-            addURL += "&status=" + status;
-        }else if(!owner && category && status){
-            addURL += "&status=" + status;
-        }else if(!owner && !category && status){
-            addURL += "?status=" + status;
+        if(category && catFirst == false){
+            addUrl += "&category=" + category;
         }
 
-        if(owner && category && status && limit != 0 || !owner && category && status && limit != 0 ||
-            !owner && !category && status && limit != 0 ){
-            addURL += "&limit=" + limit;
-        }else if (!owner && !category && !status && limit != 0 && !order){
-            addURL += "?limit=" + limit;
+        if(limit != 0 && limFirst == false){
+            addUrl += "&limit=" + limit;
         }
 
-        if(owner && category && status && limit != 0 && order|| !owner && category && status && limit != 0 && order||
-            !owner && !category && status && limit != 0 && order || !owner && !category && !status && limit != 0 && order){
-            addURL += "&orderBy=" + order;
-        }else if (!owner && !category && !status && limit == 0 && order){
-            addURL += "?orderBy=" + order;
+        if(order && orderFirst == false){
+            addUrl += "&orderBy=" + order;
         }
-
-
-        if(!owner && !category && !status && limit == 0 && !order){
-            return addURL;
-        } //for no filter at all
-
-        return addURL
+        return addUrl
     }
 
     getTodoById(id: string): Observable<Todo> {
