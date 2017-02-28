@@ -64,7 +64,7 @@ public class Server {
 
         get("api/todoSummary", (req, res) -> {
             res.type("application/json");
-            return todoController.listTodos(req.queryMap().toMap());
+            return todoController.todoSummary();
         });
 
         // Handle "404" file not found requests:
