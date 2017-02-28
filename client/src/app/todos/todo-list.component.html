@@ -12,12 +12,37 @@
         <input #input type="text" placeholder="Sort todos" (input)="order = $event.target.value">
         <button (click)="onChange()">Submit</button>
     </li>
+
+    <select (input)="currentProgress = $event.target.value">
+        <option value="100">Which bar?</option>
+        <option value="47.66">Complete Todos</option>
+        <option value="50">Groceries</option>
+        <option value="49.36">Homework</option>
+        <option value="42.25">Video Games</option>
+        <option value="46">Software Design</option>
+        <option value="56.52">Roberta</option>
+        <option value="46">Dawn</option>
+        <option value="36.73">Workman</option>
+        <option value="44.26">Fry</option>
+        <option value="52.94">Barry</option>
+        <option value="51.16">Blanche</option>
+    </select>
+
+    <button (click)="changeProgress()">Change Bar</button>
+
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" id="pBar1" role="progressbar"
+             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100%" style="width: 100%">
+            {{ visiblePercentage }}
+        </div>
+    </div>
+
     <li class="list-group-item list-group-item-info">Todos</li>
     <li *ngFor="let todo of todos| filterBy: { body: searchBody } | filterBy: { status: complete }" class="list-group-item">
-        {{ todo._id }} <br>
-        {{ todo.owner }} <br>
-        {{ todo.status }} <br>
-        {{ todo.body }} <br>
-        {{ todo.category }}
+        <span class="label label-primary">Id :</span> {{ todo._id }}<br>
+        <span class="label label-success">Owner:</span> {{ todo.owner }} <br>
+        <span class="label label-info"> Status :</span> {{ todo.status }} <br>
+        <span class="label label-info">Body :</span> {{ todo.body }} <br>
+        <span class="label label-info">Category :</span> {{ todo.category }}
     </li>
 </ul>

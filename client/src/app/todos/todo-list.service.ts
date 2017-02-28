@@ -29,9 +29,9 @@ export class TodoListService {
         }else if(order){
             addUrl += "?orderBy=" + order;
             limFirst = true;
-        }else if(limit != 0){
+        }else if(limit > 0){
             addUrl += "?limit=" + limit;
-            orderFirst = true;
+            limFirst = true;
         }
 
         if(owner && ownerFirst == false){
@@ -42,7 +42,7 @@ export class TodoListService {
             addUrl += "&category=" + category;
         }
 
-        if(limit != 0 && limFirst == false){
+        if(limit > 0 && limFirst == false){
             addUrl += "&limit=" + limit;
         }
 

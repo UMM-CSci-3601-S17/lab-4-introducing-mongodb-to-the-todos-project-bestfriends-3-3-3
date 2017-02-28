@@ -15,6 +15,8 @@ export class TodoListComponent implements OnInit {
     public searchCategory: string;
     public limit: number = 0;
     public order: string;
+    public currentProgress: string;
+    public visiblePercentage: string = "100%";
     constructor(private todoListService: TodoListService) {
         // this.users = this.userListService.getUsers();
     }
@@ -35,5 +37,14 @@ export class TodoListComponent implements OnInit {
                 console.log(err);
             }
         );
+    }
+
+    changeProgress(): void {
+        var pBar1 : Element = document.getElementById("pBar1");
+
+        let number :number = +this.currentProgress;
+
+        pBar1.setAttribute("style", "width: " + number + "%");
+        this.visiblePercentage = this.currentProgress + "%";
     }
 }
